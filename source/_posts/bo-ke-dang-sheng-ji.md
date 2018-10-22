@@ -3,6 +3,7 @@ title: Hexo + GitHub Page 博客诞生记
 tags:
     - Hexo
     - GitHub Pages
+date: 2018-10-16 00:32:34
 ---
 &emsp;&emsp;最近工作关系，需搭建一个SQL Server集群，同样的事情之前就做过一次，但这次仍然麻烦不断，茫茫互联网，频频Google，浪费了好多时间。好记性不如烂笔头，遂决定建个博客，来记录工作学习中的问题。
 &emsp;&emsp;开篇，就简单记录一下Hexo + GitHub Page搭建这个博客的过程吧。<!-- more -->
