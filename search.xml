@@ -5,7 +5,7 @@
     <url>/2018/12/19/csapp-attacklab/</url>
     <content><![CDATA[<p>缓冲区溢出攻击也是第三章的配套实验，实验提供了两个有缓冲区溢出漏洞的x86-64程序(<a href="http://csapp.cs.cmu.edu/3e/target1.tar" target="_blank" rel="noopener">CSAPP 3e: Attack Lab</a>)，要求我们设计“恶意输入”，利用程序漏洞，实现指令注入，执行未授权代码。两个漏洞程序：ctarget 和 rtarget。ctarget 对运行时栈无保护，既没有栈地址随机化，也允许执行栈上的指令，十分容易攻击。rtarget 则开启了栈地址随机化，且不允许执行栈上的指令，因此无法利用指令注入，对它的攻击被称为return-oriented programming (ROP)，要利用到程序中原有的一些特殊的字节序列：gadget。<a id="more"></a></p>
 <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>程序用运行时栈(runtime stack)实现C语言中“函数”的概念。调用一个函数所需的栈空间被称为栈帧，按地址从大往小，从栈底往栈顶看，一个栈帧中依次保存了寄存器，局部变量，调用其他函数所需的参数，返回地址等，如下图所示(《CSAPP》图3-25)。函数执行完跳转回调用方，需要执行<code>ret</code>指令，<code>ret</code>可分为两步：一是从栈中弹出返回地址；二是设置程序计数器(Program Counter)<code>%rip</code>，将控制流转移到弹出的返回地址。当程序在栈上的缓冲区溢出，返回地址就可能被篡改，使得控制流跳转到未授权的指令。通过设计恶意输入，还能够在栈上注入指令，执行攻击者的非法操作。</p>
-<img src="/.io//stack-frame.png" width="320px" height="480px" alt="栈帧结构" title="栈帧结构">
+<img src="/2018/12/19/csapp-attacklab/stack-frame.png" width="320px" height="480px" alt="栈帧结构" title="栈帧结构">
 
 <p><code>objdump -d ctarget &gt; ctarget.d</code>，导出实验给出的的有缓存区溢出危险的函数如下。可以看到缓冲区大小为0x28，因此设计恶意输入时，要先用40字节写满缓冲区，下文就不再浪费笔墨写这40字节了。由于缓冲区是从栈顶向栈底写入的，且<code>getbuf</code>没有保存寄存器，看上面的栈帧结构图就知道，填满缓冲区之后，溢出的部分可以直接覆盖返回地址，这是攻击的基础。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00000000004017a8 &lt;getbuf&gt;:</span><br><span class="line">  4017a8:   48 83 ec 28             sub    $0x28,%rsp</span><br><span class="line">  4017ac:   48 89 e7                mov    %rsp,%rdi</span><br><span class="line">  4017af:   e8 8c 02 00 00          callq  401a40 &lt;Gets&gt;</span><br><span class="line">  4017b4:   b8 01 00 00 00          mov    $0x1,%eax</span><br><span class="line">  4017b9:   48 83 c4 28             add    $0x28,%rsp</span><br><span class="line">  4017bd:   c3                      retq</span><br><span class="line">  4017be:   90                      nop</span><br><span class="line">  4017bf:   90                      nop</span><br></pre></td></tr></table></figure>
@@ -161,7 +161,7 @@
     <title>一个C++14/SDL2 实现的比较完善的俄罗斯方块</title>
     <url>/2018/11/15/tetris/</url>
     <content><![CDATA[<p>&emsp;&emsp;最近工作遇到一个问题：要在几个继承自同一基类的子类初始化的时候执行一些特定的初始化操作，想当然地，在基类写个空的虚函数，子类override，然后在基类的构造函数中调用这个虚函数。一执行，oh，才发现子类override的虚函数都没被调用…<a id="more"></a>想了一秒钟，反应过来：构造函数中的虚函数是不会被动态绑定的，换句话说，在基类构造函数中调用的虚函数只能是基类自己定义的虚函数，而不是子类override的那个。我能清楚地记得《Effecitive C++》一书中有个item讲过这个问题，我还看过不止一遍，然而一不小心还是会踩坑。C++的坑太多，平时工作用的最多的都是C with class，type traits，久而久之，踩过的坑就都忘了。C++需要不断练习，这次先用SDL2写个俄罗斯方块练练手，代码及说明在 <a href="https://github.com/zzzz-qq/toys/tree/master/tetris" target="_blank" rel="noopener">GitHub: Tetirs</a>。</p>
-<p><img src="/.io//tetris.png" alt="tetris"></p>
+<p><img src="/2018/11/15/tetris/tetris.png" alt="tetris"></p>
 ]]></content>
       <tags>
         <tag>C++</tag>

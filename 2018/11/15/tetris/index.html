@@ -58,10 +58,10 @@
 <meta property="og:site_name" content="奥特曼与小怪兽">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;最近工作遇到一个问题：要在几个继承自同一基类的子类初始化的时候执行一些特定的初始化操作，想当然地，在基类写个空的虚函数，子类override，然后在基类的构造函数中调用这个虚函数。一执行，oh，才发现子类override的虚函数都没被调用…">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;zzzz-qq.github.io&#x2F;.io&#x2F;&#x2F;tetris.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;zzzz-qq.github.io&#x2F;2018&#x2F;11&#x2F;15&#x2F;tetris&#x2F;tetris.png">
 <meta property="og:updated_time" content="2019-11-23T04:31:19.774Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;zzzz-qq.github.io&#x2F;.io&#x2F;&#x2F;tetris.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;zzzz-qq.github.io&#x2F;2018&#x2F;11&#x2F;15&#x2F;tetris&#x2F;tetris.png">
 
 <link rel="canonical" href="https://zzzz-qq.github.io/2018/11/15/tetris/">
 
@@ -251,7 +251,7 @@
 
       
         <p>&emsp;&emsp;最近工作遇到一个问题：要在几个继承自同一基类的子类初始化的时候执行一些特定的初始化操作，想当然地，在基类写个空的虚函数，子类override，然后在基类的构造函数中调用这个虚函数。一执行，oh，才发现子类override的虚函数都没被调用…<a id="more"></a>想了一秒钟，反应过来：构造函数中的虚函数是不会被动态绑定的，换句话说，在基类构造函数中调用的虚函数只能是基类自己定义的虚函数，而不是子类override的那个。我能清楚地记得《Effecitive C++》一书中有个item讲过这个问题，我还看过不止一遍，然而一不小心还是会踩坑。C++的坑太多，平时工作用的最多的都是C with class，type traits，久而久之，踩过的坑就都忘了。C++需要不断练习，这次先用SDL2写个俄罗斯方块练练手，代码及说明在 <a href="https://github.com/zzzz-qq/toys/tree/master/tetris" target="_blank" rel="noopener">GitHub: Tetirs</a>。</p>
-<p><img src="/.io//tetris.png" alt="tetris"></p>
+<p><img src="/2018/11/15/tetris/tetris.png" alt="tetris"></p>
 
     </div>
 
